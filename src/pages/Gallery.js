@@ -1,10 +1,13 @@
 import React from 'react'
+import ImagesDropZone from '../components/ImagesDropZone'
 
 export default function Gallery() {
   return (
-    <div className="bg-black h-screen w-full">
-      <div></div>
-    </div>
-  )
+		<div className=" h-screen w-screen">
+			<div className="h-full w-full flex justify-center">
+				<ImagesDropZone  />
+			</div>
+		</div>
+	);
 }
 

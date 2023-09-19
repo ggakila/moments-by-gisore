@@ -26,7 +26,7 @@ export default function Login() {
 	};
 
 	return (
-		<div className="h-screen bg-black flex flex-col items-center justify-center relative px-[10px] sm:px-[40px] ">
+		<div className="h-screen  flex flex-col items-center justify-center relative px-[10px] md:px-[40px] ">
 			{/* header section */}
 			<div className="w-full  absolute top-0 flex justify-between  px-[20px] md:px-[100px] py-[40px] items-center">
 				<h1 className="text-2xl sm:text-3xl md:text-5xl flex items-center text-center">
