@@ -7,11 +7,25 @@ import Image from "next/image";
 export default function Login() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+	const [usererror, setUsererror] = useState("");
+	const [passerror, setPasserror] = useState("");
 
 	const router = useRouter();
 
 	const handleLogin = async (e) => {
 		e.preventDefault();
+
+
+		if(!username) {
+			setUsererror( "Please enter a username!");
+			setUsername("")
+		}
+		
+		if(!password){
+			setPasserror("Please enter a password!");
+			setPassword("")
+		}
+
 		const result = await signIn("credentials", {
 			username,
 			password,
@@ -87,6 +101,7 @@ export default function Login() {
 								value={username}
 								onChange={(e) => setUsername(e.target.value)}
 							/>
+							{usererror && <p className="text-red-500">{usererror}</p>}
 						</div>
 						<div className="flex flex-col px-[0px] sm:p-[10px]">
 							<label className="text-neutral-500 my-2">Password:</label>
@@ -98,6 +113,7 @@ export default function Login() {
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
+							{passerror && <p className="text-red-500">{passerror}</p>}
 						</div>
 						<p className="text-neutral-500 px-[0px] sm:p-[10px]">
 							By signing up you agree to the{" "}

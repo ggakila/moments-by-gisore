@@ -1,15 +1,17 @@
 // pages/index.js
-import Login from "@/pages/Login";
-import Gallery from "@/pages/Gallery";
-import { useSession } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
+import { useEffect } from "react";
+import Router from "next/router";
 
 export default function Home() {
 	const { data: session } = useSession();
 
-	return (
-		<main className="">
-			<Login />
-			{session ? <Gallery /> : null}
-		</main>
-	);
+	useEffect(() => {
+		// Redirect to the login page if the user is not authenticated
+		if (!session) {
+			Router.push("/Login");
+		}
+	}, [session]);
+
+	return <main className="">{session ? <Gallery /> : null}</main>;
 }

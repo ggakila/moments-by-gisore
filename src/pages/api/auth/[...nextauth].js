@@ -49,5 +49,9 @@ export default NextAuth({
 			return session;
 		},
 	},
+
+	session: {
+		jwt: true,
+	}
 	// Add other configuration options as needed.
 });
