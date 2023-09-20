@@ -18,7 +18,7 @@ export default NextAuth({
 				// Custom authentication logic here
 				if (
 					credentials.username === "ggakila" &&
-					credentials.password === "mandazimoto123"
+					credentials.password === "mandazi"
 				) {
 					// Generate a JWT token
 					const user = { username: "ggakila" };
