@@ -28,9 +28,9 @@ const Draggable = dynamic(
 export default function MyDropzone({ className }) {
 	const [imagez, setImagez] = useState([
 		{
-			id: "africa",
-			name: "africa.jpg",
-			preview: "/imagezz/africa.jpg",
+			id: "developer",
+			name: "developer.jpg",
+			preview: "/imagezz/developer.jpg",
 		},
 		{
 			id: "sculpture",
@@ -42,45 +42,45 @@ export default function MyDropzone({ className }) {
 			name: "woman.jpg",
 			preview: "/imagezz/woman.jpg",
 		},
-		{
-			id: "children",
-			name: "children.jpg",
-			preview: "/imagezz/children.jpg",
-		},
-		{
-			id: "modernization",
-			name: "modernization.jpg",
-			preview: "/imagezz/modernization.jpg",
-		},
-		{
-			id: "nairobi",
-			name: "nairobi.jpg",
-			preview: "/imagezz/nairobi.jpg",
-		},
+		// {
+		// 	id: "children",
+		// 	name: "children.jpg",
+		// 	preview: "/imagezz/children.jpg",
+		// },
+		// {
+		// 	id: "modernization",
+		// 	name: "modernization.jpg",
+		// 	preview: "/imagezz/modernization.jpg",
+		// },
+		// {
+		// 	id: "nairobi",
+		// 	name: "nairobi.jpg",
+		// 	preview: "/imagezz/nairobi.jpg",
+		// },
 	]);
 
-const [imagesPerRow, setImagesPerRow] = useState(1); // Initialize with one image per row
+// const [imagesPerRow, setImagesPerRow] = useState(1); // Initialize with one image per row
 
-  useEffect(() => {
-    const calculateImagesPerRow = () => {
-      const containerWidth = document.querySelector('.preview').clientWidth; // Get container width
-      const imageWidth = 300; // Adjust this based on your image size
+//   useEffect(() => {
+//     const calculateImagesPerRow = () => {
+//       const containerWidth = document.querySelector('.preview').clientWidth; // Get container width
+//       const imageWidth = 300; // Adjust this based on your image size
 
-      const newImagesPerRow = Math.floor(containerWidth / imageWidth);
+//       const newImagesPerRow = Math.floor(containerWidth / imageWidth);
 
-      // Ensure there's at least one image per row
-      setImagesPerRow(Math.max(newImagesPerRow, 1));
-    };
+//       // Ensure there's at least one image per row
+//       setImagesPerRow(Math.max(newImagesPerRow, 1));
+//     };
 
-    // Call the function when the window is resized
-    window.addEventListener('resize', calculateImagesPerRow);
-    calculateImagesPerRow(); // Calculate initially
+//     // Call the function when the window is resized
+//     window.addEventListener('resize', calculateImagesPerRow);
+//     calculateImagesPerRow(); // Calculate initially
 
-    return () => {
-      // Remove the event listener when the component unmounts
-      window.removeEventListener('resize', calculateImagesPerRow);
-    };
-  }, [imagez]);
+//     return () => {
+//       // Remove the event listener when the component unmounts
+//       window.removeEventListener('resize', calculateImagesPerRow);
+//     };
+//   }, [imagez]);
 
 
 	const onDrop = useCallback((acceptedFiles) => {
@@ -103,26 +103,26 @@ const [imagesPerRow, setImagesPerRow] = useState(1); // Initialize with one imag
 
 	
 
-   const reorderImages = (imagez, startIndex, endIndex) => {
-			// Determine the row of the source and destination indices
-			const startRow = Math.floor(startIndex / imagesPerRow);
-			const endRow = Math.floor(endIndex / imagesPerRow);
+//    const reorderImages = (imagez, startIndex, endIndex) => {
+// 			// Determine the row of the source and destination indices
+// 			const startRow = Math.floor(startIndex / imagesPerRow);
+// 			const endRow = Math.floor(endIndex / imagesPerRow);
 
-			// If the image is moved to a different row, don't reorder the images
-			if (startRow !== endRow) {
-				return imagez;
-			}
+// 			// If the image is moved to a different row, don't reorder the images
+// 			if (startRow !== endRow) {
+// 				return imagez;
+// 			}
 
-			// Calculate the new indices within the row
-			const adjustedStartIndex = startIndex % imagesPerRow;
-			const adjustedEndIndex = endIndex % imagesPerRow;
+// 			// Calculate the new indices within the row
+// 			const adjustedStartIndex = startIndex % imagesPerRow;
+// 			const adjustedEndIndex = endIndex % imagesPerRow;
 
-			const updatedImages = [...imagez];
-			const [movedImage] = updatedImages.splice(adjustedStartIndex, 1);
-			updatedImages.splice(adjustedEndIndex, 0, movedImage);
+// 			const updatedImages = [...imagez];
+// 			const [movedImage] = updatedImages.splice(adjustedStartIndex, 1);
+// 			updatedImages.splice(adjustedEndIndex, 0, movedImage);
 
-			return updatedImages;
-		};
+// 			return updatedImages;
+// 		};
 
 
 
@@ -131,13 +131,13 @@ const [imagesPerRow, setImagesPerRow] = useState(1); // Initialize with one imag
 				return;
 			}
 
-			const updatedImages = reorderImages(
-				imagez,
-				result.source.index,
-				result.destination.index
-			);
-			setImagez(updatedImages); 
+			const updatedItems = [...imagez];
+			const [reorderedItem] = updatedItems.splice(result.source.index, 1);
+			updatedItems.splice(result.destination.index, 0, reorderedItem);
+
+			setImagez(updatedItems);
 		};
+
 
         
 
@@ -198,7 +198,7 @@ const [imagesPerRow, setImagesPerRow] = useState(1); // Initialize with one imag
 								style={{
 									backgroundColor: snapshot.isDraggingOver ? "lightblue" : "",
 								}}
-								className=" w-4/5 flex flex-wrap justify-center gap-[20px]"
+								className=" w-4/5 flex-row flex justify-center gap-[20px]"
 							>
 								{imagez.map(({ ...image }, index) => (
 									<Draggable
@@ -211,7 +211,7 @@ const [imagesPerRow, setImagesPerRow] = useState(1); // Initialize with one imag
 												ref={provided.innerRef}
 												{...provided.draggableProps}
 												{...provided.dragHandleProps}
-												className="w-[200px] h-[300px] relative "
+												className="w-[90px] sm:w-[200px] h-[130px] sm:h-[300px] relative "
 											>
 												<Image
 													className="border rounded-lg"
