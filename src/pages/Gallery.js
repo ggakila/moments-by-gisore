@@ -10,7 +10,7 @@ export default function Gallery() {
   useEffect(() => {
     // Redirect to the login page if the user is not authenticated
     if (!session) {
-      Router.push("/login");
+      Router.push("/Login");
     }
   }, [session]);
 
