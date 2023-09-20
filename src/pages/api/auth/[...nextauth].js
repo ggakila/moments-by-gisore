@@ -1,11 +1,13 @@
-// pages/api/auth.js
+// Import necessary modules and packages
 import NextAuth from "next-auth";
-import Providers from "next-auth/providers";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { sign } from "jsonwebtoken";
 
+// Define and export the NextAuth configuration
 export default NextAuth({
+	// Define authentication providers
 	providers: [
-		Providers.Credentials({
+		CredentialsProvider({
 			// The name to display on the sign-in form
 			name: "Credentials",
 			credentials: {
@@ -30,10 +32,11 @@ export default NextAuth({
 			},
 		}),
 	],
+	// Define callbacks for JWT and session handling
 	callbacks: {
 		async jwt(token, user) {
 			if (user) {
-				// Attach the user to the token
+				// Attach the user properties to the token
 				token.id = user.id;
 				token.username = user.username;
 			}
