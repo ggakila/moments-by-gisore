@@ -27,8 +27,8 @@ export default function Login() {
 		}
 
 		const result = await signIn("credentials", {
-			username,
-			password,
+			username: username,
+			password: password,
 			redirect: false,
 			callbackUrl: '/Gallery',
 		});
