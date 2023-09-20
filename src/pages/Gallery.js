@@ -4,6 +4,24 @@ import { useSession, getSession } from "next-auth/react";
 import { useEffect } from "react";
 import Router from "next/router";
 
+
+export async function getServerSideProps(context) {
+	const session = await getSession(context);
+
+	if (!session) {
+		return {
+			redirect: {
+				destination: "/login",
+				permanent: false,
+			},
+		};
+	}
+
+	return {
+		props: {},
+	};
+}
+
 export default function Gallery() {
   const { data: session } = useSession();
 
