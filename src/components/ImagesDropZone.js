@@ -188,9 +188,7 @@ const [imagesPerRow, setImagesPerRow] = useState(1); // Initialize with one imag
 				<DragDropContext onDragEnd={onDragEnd}>
 					<Droppable
 						droppableId="droppable1"
-                        direction="horizontal"
-
-					
+                        direction="horizontal"					
 						
 					>
 						{(provided, snapshot) => (
