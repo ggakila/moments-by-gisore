@@ -18,18 +18,19 @@ export default function Login() {
 
 		if(!username) {
 			setUsererror( "Please enter a username!");
-			setUsername("")
+			
 		}
 		
 		if(!password){
 			setPasserror("Please enter a password!");
-			setPassword("")
+			
 		}
 
 		const result = await signIn("credentials", {
 			username,
 			password,
 			redirect: false,
+			callbackUrl: '/Gallery',
 		});
 		if (!result.error) {
 			console.log("Auth succeeded: ");
