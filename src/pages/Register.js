@@ -1,13 +1,20 @@
 // pages/login.js
 "use client";
-import { signIn } from "next-auth/react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import {auth} from "./firebase";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [passwordAgain, setPasswordAgain] = useState("");
+
+
+    const signup = () => {
+        createUserWithEmailAndPassword(auth, email, password); 
+    }
 	// const [usererror, setUsererror] = useState("");
 	// const [passerror, setPasserror] = useState("");
 
@@ -16,18 +23,16 @@ export default function Login() {
 	// const handleLogin = async (e) => {
 	// 	e.preventDefault();
 
-
 	// 	if(!username) {
 	// 		setUsererror( "Please enter a email!");
-			
-	// 	}
-		
-	// 	if(!password){
-	// 		setPasserror("Please enter a password!");
-			
+
 	// 	}
 
-		
+	// 	if(!password){
+	// 		setPasserror("Please enter a password!");
+
+	// 	}
+
 	// };
 
 	return (
@@ -111,22 +116,50 @@ export default function Login() {
 							/>
 							{/* {passerror && <p className="text-red-500">{passerror}</p>} */}
 						</div>
+						<div className="flex flex-col px-[0px] sm:p-[10px]">
+							<label className="text-neutral-500 my-2">Confirm Password:</label>
+							<input
+								className="bg-neutral-700 focus:bg-white focus:text-black py-[10px] border-transparent focus:border-transparent rounded-md px-5 text-white placeholder-neutral-400"
+								placeholder="Confirm password..."
+								id="passwordAgain"
+								type="passwordAgain"
+								name="passwordAgain"
+								value={passwordAgain}
+								required
+								onChange={(e) => setPasswordAgain(e.target.value)}
+							/>
+							{/* {passerrorAgain && <p className="text-red-500">{passerrorAgain}</p>} */}
+						</div>
 						<p className="text-neutral-500 px-[0px] sm:p-[10px]">
-							By signing in you agree to the{" "}
+							By signing up you agree to the{" "}
 							<span className="underline">Privacy Policy</span> and{" "}
 							<span className="underline">Terms of Service</span>.
 						</p>
 						<button
-
 							className="bg-white w-1/2 mx-auto py-[10px] px-[5px] text-black font-semibold border rounded-md hover:bg-neutral-400"
-							onClick={() => signIn('credentials', {email, password, redirect:true, callbackUrl: '/'})}
-							disabled={!email || !password}
+							onClick={() =>
+								signup("credentials", {
+									email,
+									password,
+									redirect: true,
+									callbackUrl: "/",
+								})
+							}
+							disabled={!email || !password || !passwordAgain}
 						>
-							Login
+							Sign up
 						</button>
 					</div>
-				<p>Don't have an account? <span className="text-white hover:bg-blue-400 text-lg" onClick={() => router.push('/Register')}>Register</span></p>
 				</div>
+				<p>
+					Already have an account?{" "}
+					<span
+						className="text-white text-lg"
+						onClick={() => router.push("/Login")}
+					>
+						Login
+					</span>
+				</p>
 			</div>
 		</div>
 	);

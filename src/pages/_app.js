@@ -1,15 +1,14 @@
-import { SessionProvider } from "next-auth/react";
+import SessionProvider from "./SessionProvider";
 import Head from "next/head";
 import "@/styles/globals.css";
-import { basePath } from "../../next.config";
 
-export default function App({ Component, pageProps: {session, ...pageProps} }) {
+export default function App({ Component, pageProps }) {
 	return (
 		<>
-			<SessionProvider session={pageProps.session}>
-				<Head>
-					<title>Moments by Gisore</title>
-				</Head>
+			<Head>
+				<title>Moments by Gisore</title>
+			</Head>
+			<SessionProvider>
 				<Component {...pageProps} />
 			</SessionProvider>
 		</>

@@ -1,27 +1,22 @@
-// pages/index.js
-import { useSession, getSession } from "next-auth/react";
-import { useEffect } from "react";
-import Router from "next/router";
+// pages/index.
+'use client';
+import Gallery from "./Gallery";
+import {signOut, useSession} from 'next-auth/react';
+import { useRouter } from "next/router";
 
-export async function getServerSideProps(context) {
-	const session = await getSession(context);
-
-	return {
-		props: {
-			session: session || null,
-		},
-	};
-}
 
 export default function Home() {
-	const { data: session } = useSession();
+	const router = useRouter();
 
-	useEffect(() => {
-		// Redirect to the login page if the user is not authenticated
-		if (!session) {
-			Router.push("/Login");
+
+	const session = useSession({
+		required: true,
+		onUnauthenticated(){
+			router.push("/Login");
 		}
-	}, [session]);
-
-	return <main className="">{session ? <Gallery /> : null}</main>;
-}
+	})
+	return (
+	<main className="">
+		<Gallery />
+	</main>
+)};
