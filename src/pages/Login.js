@@ -8,27 +8,41 @@ import Image from "next/image";
 export default function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	// const [usererror, setUsererror] = useState("");
-	// const [passerror, setPasserror] = useState("");
+	const [usererror, setUsererror] = useState("");
+	const [passerror, setPasserror] = useState("");
 
 	const router = useRouter();
 
-	// const handleLogin = async (e) => {
-	// 	e.preventDefault();
+	const handleLogin = async (e) => {
+		e.preventDefault();
 
+		setUsererror("");
+		setPasserror("");
 
-	// 	if(!username) {
-	// 		setUsererror( "Please enter a email!");
+		if (!email) {
+			setUsererror("Please enter an email!");
+		}
+
+		if (!password) {
+			setPasserror("Please enter a password!");
+		}
+
+		if (email && password) {
+			const result = await signIn("credentials", {
+				email,
+				password,
+				redirect: false,
+			});
 			
-	// 	}
-		
-	// 	if(!password){
-	// 		setPasserror("Please enter a password!");
-			
-	// 	}
+			if (!result.error) {
+				console.log("Auth succeeded: ");
+				router.push("/Gallery");
+			} else {
+				setUsererror("Invalid email or password");
+			}
+		}
+	};
 
-		
-	// };
 
 	return (
 		<div className="h-screen  flex flex-col items-center justify-center relative px-[10px] md:px-[40px] ">
@@ -76,8 +90,8 @@ export default function Login() {
 					</div>
 				</div>
 				<div className="bg-neutral-700 hidden sm:block w-[2px] h-4/5"></div>
-				<div
-					// onSubmit={handleLogin}
+				<form
+					onSubmit={handleLogin}
 					className="flex flex-col items-center w-5/6 sm:w-1/2"
 				>
 					{/* inputs */}
@@ -95,7 +109,7 @@ export default function Login() {
 								required
 								onChange={(e) => setEmail(e.target.value)}
 							/>
-							{/* {usererror && <p className="text-red-500">{usererror}</p>} */}
+							{usererror && <p className="text-red-500">{usererror}</p>}
 						</div>
 						<div className="flex flex-col px-[0px] sm:p-[10px]">
 							<label className="text-neutral-500 my-2">Password:</label>
@@ -109,7 +123,7 @@ export default function Login() {
 								required
 								onChange={(e) => setPassword(e.target.value)}
 							/>
-							{/* {passerror && <p className="text-red-500">{passerror}</p>} */}
+							{passerror && <p className="text-red-500">{passerror}</p>}
 						</div>
 						<p className="text-neutral-500 px-[0px] sm:p-[10px]">
 							By signing in you agree to the{" "}
@@ -118,6 +132,7 @@ export default function Login() {
 						</p>
 						<button
 							className="bg-white w-1/2 mx-auto py-[10px] px-[5px] cursor-pointer text-black font-semibold border rounded-md hover:bg-neutral-300"
+							type="submit"
 							onClick={() =>
 								signIn("credentials", {
 									email,
@@ -126,7 +141,7 @@ export default function Login() {
 									callbackUrl: "/Gallery",
 								})
 							}
-							disabled={!email || !password}
+							
 						>
 							Login
 						</button>
@@ -140,7 +155,7 @@ export default function Login() {
 							Register
 						</span>
 					</p>
-				</div>
+				</form>
 			</div>
 		</div>
 	);
