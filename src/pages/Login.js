@@ -95,6 +95,7 @@ export default function Login() {
 				>
 					{/* inputs */}
 					<div className="w-full sm:w-4/5 flex flex-col gap-[15px]">
+							{usererror && <p className="text-red-500">{usererror}</p>}
 						<div className="flex flex-col px-[0px] sm:px-[10px]">
 							<label className="text-neutral-500 my-2">Email:</label>
 							<input
@@ -108,7 +109,6 @@ export default function Login() {
 								required
 								onChange={(e) => setEmail(e.target.value)}
 							/>
-							{usererror && <p className="text-red-500">{usererror}</p>}
 						</div>
 						<div className="flex flex-col px-[0px] sm:p-[10px]">
 							<label className="text-neutral-500 my-2">Password:</label>
