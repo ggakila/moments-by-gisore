@@ -4,17 +4,16 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import {auth} from "./firebase";
+import { auth } from "../firebase";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [passwordAgain, setPasswordAgain] = useState("");
 
-
-    const signup = () => {
-        createUserWithEmailAndPassword(auth, email, password); 
-    }
+	const signup = () => {
+		createUserWithEmailAndPassword(auth, email, password);
+	};
 	// const [usererror, setUsererror] = useState("");
 	// const [passerror, setPasserror] = useState("");
 

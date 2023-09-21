@@ -119,7 +119,7 @@ export default function Login() {
 						<button
 
 							className="bg-white w-1/2 mx-auto py-[10px] px-[5px] text-black font-semibold border rounded-md hover:bg-neutral-400"
-							onClick={() => signIn('credentials', {email, password, redirect:true, callbackUrl: '/'})}
+							onClick={() => signIn('credentials', {email, password, redirect:true, callbackUrl: '/Gallery'})}
 							disabled={!email || !password}
 						>
 							Login

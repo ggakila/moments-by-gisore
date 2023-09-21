@@ -1,7 +1,12 @@
+"use client";
+import { signOut, useSession } from "next-auth/react";
 import React, { useCallback, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import { useDropzone } from "react-dropzone";
 import dynamic from "next/dynamic";
+
+
 const DragDropContext = dynamic(
 	() =>
 		import("react-beautiful-dnd").then((mod) => {
@@ -24,8 +29,17 @@ const Draggable = dynamic(
 	{ ssr: false }
 );
 
-
 export default function MyDropzone({ className }) {
+
+	const router =useRouter();
+
+const session = useSession({
+	required: true,
+	onUnauthenticated() {
+		router.push("/Login");
+	},
+});
+
 	const [imagez, setImagez] = useState([
 		{
 			id: "developer",
@@ -59,29 +73,28 @@ export default function MyDropzone({ className }) {
 		// },
 	]);
 
-// const [imagesPerRow, setImagesPerRow] = useState(1); // Initialize with one image per row
+	// const [imagesPerRow, setImagesPerRow] = useState(1); // Initialize with one image per row
 
-//   useEffect(() => {
-//     const calculateImagesPerRow = () => {
-//       const containerWidth = document.querySelector('.preview').clientWidth; // Get container width
-//       const imageWidth = 300; // Adjust this based on your image size
+	//   useEffect(() => {
+	//     const calculateImagesPerRow = () => {
+	//       const containerWidth = document.querySelector('.preview').clientWidth; // Get container width
+	//       const imageWidth = 300; // Adjust this based on your image size
 
-//       const newImagesPerRow = Math.floor(containerWidth / imageWidth);
+	//       const newImagesPerRow = Math.floor(containerWidth / imageWidth);
 
-//       // Ensure there's at least one image per row
-//       setImagesPerRow(Math.max(newImagesPerRow, 1));
-//     };
+	//       // Ensure there's at least one image per row
+	//       setImagesPerRow(Math.max(newImagesPerRow, 1));
+	//     };
 
-//     // Call the function when the window is resized
-//     window.addEventListener('resize', calculateImagesPerRow);
-//     calculateImagesPerRow(); // Calculate initially
+	//     // Call the function when the window is resized
+	//     window.addEventListener('resize', calculateImagesPerRow);
+	//     calculateImagesPerRow(); // Calculate initially
 
-//     return () => {
-//       // Remove the event listener when the component unmounts
-//       window.removeEventListener('resize', calculateImagesPerRow);
-//     };
-//   }, [imagez]);
-
+	//     return () => {
+	//       // Remove the event listener when the component unmounts
+	//       window.removeEventListener('resize', calculateImagesPerRow);
+	//     };
+	//   }, [imagez]);
 
 	const onDrop = useCallback((acceptedFiles) => {
 		console.log(acceptedFiles);
@@ -101,46 +114,38 @@ export default function MyDropzone({ className }) {
 		},
 	});
 
-	
+	//    const reorderImages = (imagez, startIndex, endIndex) => {
+	// 			// Determine the row of the source and destination indices
+	// 			const startRow = Math.floor(startIndex / imagesPerRow);
+	// 			const endRow = Math.floor(endIndex / imagesPerRow);
 
-//    const reorderImages = (imagez, startIndex, endIndex) => {
-// 			// Determine the row of the source and destination indices
-// 			const startRow = Math.floor(startIndex / imagesPerRow);
-// 			const endRow = Math.floor(endIndex / imagesPerRow);
+	// 			// If the image is moved to a different row, don't reorder the images
+	// 			if (startRow !== endRow) {
+	// 				return imagez;
+	// 			}
 
-// 			// If the image is moved to a different row, don't reorder the images
-// 			if (startRow !== endRow) {
-// 				return imagez;
-// 			}
+	// 			// Calculate the new indices within the row
+	// 			const adjustedStartIndex = startIndex % imagesPerRow;
+	// 			const adjustedEndIndex = endIndex % imagesPerRow;
 
-// 			// Calculate the new indices within the row
-// 			const adjustedStartIndex = startIndex % imagesPerRow;
-// 			const adjustedEndIndex = endIndex % imagesPerRow;
+	// 			const updatedImages = [...imagez];
+	// 			const [movedImage] = updatedImages.splice(adjustedStartIndex, 1);
+	// 			updatedImages.splice(adjustedEndIndex, 0, movedImage);
 
-// 			const updatedImages = [...imagez];
-// 			const [movedImage] = updatedImages.splice(adjustedStartIndex, 1);
-// 			updatedImages.splice(adjustedEndIndex, 0, movedImage);
+	// 			return updatedImages;
+	// 		};
 
-// 			return updatedImages;
-// 		};
+	const onDragEnd = (result) => {
+		if (!result.destination) {
+			return;
+		}
 
+		const updatedItems = [...imagez];
+		const [reorderedItem] = updatedItems.splice(result.source.index, 1);
+		updatedItems.splice(result.destination.index, 0, reorderedItem);
 
-
-    const onDragEnd = (result) => {
-			if (!result.destination) {
-				return;
-			}
-
-			const updatedItems = [...imagez];
-			const [reorderedItem] = updatedItems.splice(result.source.index, 1);
-			updatedItems.splice(result.destination.index, 0, reorderedItem);
-
-			setImagez(updatedItems);
-		};
-
-
-        
-
+		setImagez(updatedItems);
+	};
 
 	return (
 		<div className="w-full flex flex-col gap-[30px] items-center">
@@ -159,7 +164,12 @@ export default function MyDropzone({ className }) {
 					</span>
 					ments
 				</h1>
-				<h1 className="text-[10px] sm:text-xl">by haggai gisore</h1>
+				<h1
+					className="text-white"
+					onClick={() => signOut()}
+				>
+					Logout
+				</h1>
 			</div>
 			<div
 				{...getRootProps({
@@ -188,8 +198,7 @@ export default function MyDropzone({ className }) {
 				<DragDropContext onDragEnd={onDragEnd}>
 					<Droppable
 						droppableId="droppable1"
-                        direction="horizontal"					
-						
+						direction="horizontal"
 					>
 						{(provided, snapshot) => (
 							<div
@@ -234,4 +243,3 @@ export default function MyDropzone({ className }) {
 		</div>
 	);
 }
-
