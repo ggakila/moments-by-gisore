@@ -43,23 +43,23 @@ const session = useSession({
 	const [imagez, setImagez] = useState([
 		{
 			id: "developer",
-			name: "developer.jpg",
+			name: "developer",
 			preview: "/imagezz/developer.jpg",
 		},
 		{
 			id: "sculpture",
-			name: "sculpture.jpg",
+			name: "sculpture",
 			preview: "/imagezz/sculpture.jpg",
 		},
 		{
 			id: "woman",
-			name: "woman.jpg",
+			name: "woman",
 			preview: "/imagezz/woman.jpg",
 		},
 		
 		{
 			id: "modernization",
-			name: "modernization.jpg",
+			name: "modernization",
 			preview: "/imagezz/modernization.jpg",
 		},
 		
@@ -157,7 +157,7 @@ const session = useSession({
 								ref={provided.innerRef}
 								{...provided.droppableProps}
 								style={{
-									backgroundColor: snapshot.isDraggingOver ? "lightblue" : "",
+									backgroundColor: snapshot.isDraggingOver ? "gray" : "",
 								}}
 								className=" w-4/5 flex-row flex justify-center gap-[10px] sm:gap-[20px]"
 							>
@@ -172,7 +172,7 @@ const session = useSession({
 												ref={provided.innerRef}
 												{...provided.draggableProps}
 												{...provided.dragHandleProps}
-												className="w-[100px] sm:w-[200px] h-[140px] sm:h-[300px] relative "
+												className="w-[100px] sm:w-[200px] h-[140px] sm:h-[300px] relative flex flex-col "
 											>
 												<Image
 													className="border rounded-lg"
@@ -182,6 +182,7 @@ const session = useSession({
 													style={{ objectFit: "cover" }}
 													priority={true}
 												/>
+												<div className="text-sm bg-transparent text-neutral-300 text-center w-full bottom-[-20px] absolute">{image.id}</div>
 											</div>
 										)}
 									</Draggable>
