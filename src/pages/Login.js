@@ -117,15 +117,29 @@ export default function Login() {
 							<span className="underline">Terms of Service</span>.
 						</p>
 						<button
-
-							className="bg-white w-1/2 mx-auto py-[10px] px-[5px] text-black font-semibold border rounded-md hover:bg-neutral-400"
-							onClick={() => signIn('credentials', {email, password, redirect:true, callbackUrl: '/Gallery'})}
+							className="bg-white w-1/2 mx-auto py-[10px] px-[5px] cursor-pointer text-black font-semibold border rounded-md hover:bg-neutral-300"
+							onClick={() =>
+								signIn("credentials", {
+									email,
+									password,
+									redirect: true,
+									callbackUrl: "/Gallery",
+								})
+							}
 							disabled={!email || !password}
 						>
 							Login
 						</button>
 					</div>
-				<p>Don't have an account? <span className="text-white hover:bg-blue-400 text-lg" onClick={() => router.push('/Register')}>Register</span></p>
+					<p className="m-5 text-neutral-500">
+						Don't have an account?{" "}
+						<span
+							className="text-neutral-300 cursor-pointer hover:text-blue-400 text-lg"
+							onClick={() => router.push("/Register")}
+						>
+							Register
+						</span>
+					</p>
 				</div>
 			</div>
 		</div>

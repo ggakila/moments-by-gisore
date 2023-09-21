@@ -14,25 +14,29 @@ export default function Login() {
 	const signup = () => {
 		createUserWithEmailAndPassword(auth, email, password);
 	};
-	// const [usererror, setUsererror] = useState("");
-	// const [passerror, setPasserror] = useState("");
+	const [usererror, setUsererror] = useState("");
+	const [passerror, setPasserror] = useState("");
+	const [passerrorAgain, setPasserrorAgain] = useState("");
 
 	const router = useRouter();
 
-	// const handleLogin = async (e) => {
-	// 	e.preventDefault();
+	const handleLogin = async (e) => {
+		e.preventDefault();
 
-	// 	if(!username) {
-	// 		setUsererror( "Please enter a email!");
+		if(!email) {
+			setUsererror( "Please enter a email!");
 
-	// 	}
+		}
 
-	// 	if(!password){
-	// 		setPasserror("Please enter a password!");
+		if(!password){
+			setPasserror("Please enter a password!");
 
-	// 	}
+		}
+		if (!passwordAgain) {
+			setPasserror("Please confirm a password!");
+		}
 
-	// };
+	};
 
 	return (
 		<div className="h-screen  flex flex-col items-center justify-center relative px-[10px] md:px-[40px] ">
@@ -80,10 +84,12 @@ export default function Login() {
 					</div>
 				</div>
 				<div className="bg-neutral-700 hidden sm:block w-[2px] h-4/5"></div>
-				<div
-					// onSubmit={handleLogin}
-					className="flex flex-col items-center w-5/6 sm:w-1/2"
-				>
+			
+
+				<form
+					onSubmit={handleLogin}
+					className="flex flex-col items-center w-full sm:w-1/2"
+					>
 					{/* inputs */}
 					<div className="w-full sm:w-4/5 flex flex-col gap-[15px]">
 						<div className="flex flex-col px-[0px] sm:px-[10px]">
@@ -98,8 +104,8 @@ export default function Login() {
 								autoComplete="email"
 								required
 								onChange={(e) => setEmail(e.target.value)}
-							/>
-							{/* {usererror && <p className="text-red-500">{usererror}</p>} */}
+								/>
+							{usererror && <p className="text-red-500">{usererror}</p>}
 						</div>
 						<div className="flex flex-col px-[0px] sm:p-[10px]">
 							<label className="text-neutral-500 my-2">Password:</label>
@@ -112,8 +118,8 @@ export default function Login() {
 								value={password}
 								required
 								onChange={(e) => setPassword(e.target.value)}
-							/>
-							{/* {passerror && <p className="text-red-500">{passerror}</p>} */}
+								/>
+							{passerror && <p className="text-red-500">{passerror}</p>}
 						</div>
 						<div className="flex flex-col px-[0px] sm:p-[10px]">
 							<label className="text-neutral-500 my-2">Confirm Password:</label>
@@ -126,8 +132,10 @@ export default function Login() {
 								value={passwordAgain}
 								required
 								onChange={(e) => setPasswordAgain(e.target.value)}
-							/>
-							{/* {passerrorAgain && <p className="text-red-500">{passerrorAgain}</p>} */}
+								/>
+							{passerrorAgain && (
+								<p className="text-red-500">{passerrorAgain}</p>
+								)}
 						</div>
 						<p className="text-neutral-500 px-[0px] sm:p-[10px]">
 							By signing up you agree to the{" "}
@@ -135,7 +143,8 @@ export default function Login() {
 							<span className="underline">Terms of Service</span>.
 						</p>
 						<button
-							className="bg-white w-1/2 mx-auto py-[10px] px-[5px] text-black font-semibold border rounded-md hover:bg-neutral-400"
+							className="bg-white w-1/2 mx-auto py-[10px] px-[5px] cursor-pointer text-black font-semibold border rounded-md hover:bg-neutral-400"
+							
 							onClick={() =>
 								signup("credentials", {
 									email,
@@ -145,20 +154,22 @@ export default function Login() {
 								})
 							}
 							disabled={!email || !password || !passwordAgain}
-						>
+							>
 							Sign up
 						</button>
 					</div>
-				</div>
-				<p>
+					<p className="text-neutral-400 m-5">
 					Already have an account?{" "}
 					<span
-						className="text-white text-lg"
+						className="text-gray-300 hover:text-blue-300 cursor-pointer text-lg"
 						onClick={() => router.push("/Login")}
-					>
+						>
 						Login
 					</span>
 				</p>
+				</form>
+				
+				
 			</div>
 		</div>
 	);
