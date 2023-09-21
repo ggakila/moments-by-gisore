@@ -1,4 +1,3 @@
-// pages/login.js
 "use client";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";

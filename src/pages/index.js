@@ -1,4 +1,3 @@
-// pages/index.
 'use client';
 import Gallery from "./Gallery";
 import {useSession} from 'next-auth/react';
