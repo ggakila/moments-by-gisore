@@ -65,7 +65,6 @@ export default function MyDropzone({ className }) {
 			preview: "/imagezz/africa.jpg",
 		},
 	]);
-
 	const [searchQuery, setSearchQuery] = useState("");
 
 	const filteredImages = useMemo(() => {
@@ -103,6 +102,9 @@ export default function MyDropzone({ className }) {
 
 		setImagez(updatedItems);
 	};
+
+	
+
 
 	return (
 		<div className="w-full flex flex-col gap-[30px] items-center">
