@@ -127,7 +127,7 @@ const session = useSession({
 				{...getRootProps({
 					className: className,
 				})}
-				className="w-full sm:w-4/5 items-center flex flex-col gap-[8px]  justify-center mt-[0px] text-black"
+				className=" dnd-place w-full sm:w-4/5 items-center flex flex-col gap-[8px]  justify-center mt-[0px] text-black"
 			>
 				<input {...getInputProps()} />
 				{isDragActive ? (
@@ -135,7 +135,7 @@ const session = useSession({
 						Drop the files here ...
 					</p>
 				) : (
-					<p className="text-neutral-400 w-5/6 text-center py-[70px] bg-black border border-neutral-700 border-dashed flex flex-col ">
+					<p className="text-neutral-400 w-5/6 text-center py-[20px] sm:py-[70px] bg-black border border-neutral-700 border-dashed flex flex-col ">
 						<span className="font-bold text-xl">
 							Drag 'n' drop some files here,
 						</span>{" "}
