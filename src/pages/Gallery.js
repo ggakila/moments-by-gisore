@@ -1,3 +1,4 @@
+'use client'
 import ImagesDropZone from '../components/ImagesDropZone';
 import {useState, useEffect} from 'react';
 import Loading from './Loading';
