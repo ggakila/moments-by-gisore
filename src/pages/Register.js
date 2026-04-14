@@ -149,7 +149,7 @@ export default function Login() {
 									email,
 									password,
 									redirect: true,
-									callbackUrl: "/",
+									callbackUrl: "/Login",
 								})
 							}
 							disabled={!email || !password || !passwordAgain}

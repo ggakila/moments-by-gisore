@@ -1,31 +1,126 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── THEME ── */
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --bg:      #0e0e0e;
+  --nav-bg:  rgba(14,14,14,0.92);
+  --surface: #181818;
+  --border:  rgba(255,255,255,0.08);
+  --text:    #f2f0eb;
+  --muted:   rgba(242,240,235,0.42);
+  --accent:  #6B7AF7;
+
+  --serif: 'Manrope', system-ui, sans-serif;
+  --sans:  'Manrope', system-ui, sans-serif;
+  --mono:  'Manrope', system-ui, sans-serif;
+  --syne:  'Manrope', system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+[data-theme="light"] {
+  --bg:      #f7f6f3;
+  --nav-bg:  rgba(247,246,243,0.92);
+  --surface: #efeee9;
+  --border:  rgba(0,0,0,0.1);
+  --text:    #1a1a1a;
+  --muted:   rgba(26,26,26,0.42);
+  --accent:  #5B6AF0;
+}
+
+html { cursor: none; scroll-behavior: smooth; }
+
+@media (pointer: coarse) {
+  html, html * { cursor: auto !important; }
+  [data-cursor] { cursor: auto !important; }
+}
+
+@media (max-width: 768px) {
+  html, html * { cursor: auto !important; }
+  [data-cursor] { cursor: auto !important; }
 }
 
 body {
-  background: #000000;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #001014f6, #012125);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #00141a, #15001a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-  box-sizing: border-box;
-  margin: 0;
-  padding: o;
-  color: rgb(255, 255, 255);
-  font-family: 'DM Sans';
-  color:rgb(255, 255, 255);
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Manrope', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  transition: background 0.35s ease, color 0.35s ease;
 }
 
+/* ── MARKETING pages ── */
+body.page-scroll {
+  overflow-y: auto;
+}
+
+/* noise grain — marketing */
+body.page-scroll::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 9999;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* dot grid — marketing */
+body.page-scroll::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ── GALLERY app ── */
+body.app-mode {
+  overflow: hidden;
+}
+
+/* noise grain — gallery */
+body.app-mode::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 9999;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+::selection { background: var(--text); color: var(--bg); }
+
+::-webkit-scrollbar { width: 2px; }
+::-webkit-scrollbar-thumb { background: var(--border); }
+
+.link-hover { position: relative; display: inline-block; }
+.link-hover::after {
+  content: ''; position: absolute; bottom: -1px; left: 0;
+  width: 0; height: 1px; background: currentColor;
+  transition: width 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.link-hover:hover::after { width: 100%; }
+
+/* ── RESPONSIVE GRID ── */
+.photo-grid {
+  columns: auto 3;
+  column-gap: 12px;
+  padding: 0 24px;
+}
+
+@media (max-width: 768px) {
+  .photo-grid {
+    columns: auto 2;
+    column-gap: 10px;
+    padding: 0 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .photo-grid {
+    columns: auto 1;
+    column-gap: 0;
+    padding: 0 12px;
+  }
+}
